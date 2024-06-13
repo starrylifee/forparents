@@ -30,7 +30,7 @@ def try_generate_content(api_key, image):
     model = genai.GenerativeModel('gemini-pro-vision')
     try:
         # 콘텐츠 생성 시도
-        response = model.generate_content(["학부모의 입장으로 학생의 방이나 책상 정리를 더 해야 할 곳을 찾아주는 vision 앱", image])
+        response = model.generate_content(["이 사진은 학생의 방이나 책상위의 사진입니다. 더 치워야 할 곳이 있는지 확인해서 하나하나 지적해주세요. 만약 잘 정돈되어 있다면 더 더 정리할 필요가 없다고 말해주고 칭찬해주세요.", image])
         response.resolve()
         return response
     except Exception as e:
