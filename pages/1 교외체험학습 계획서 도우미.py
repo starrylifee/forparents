@@ -57,7 +57,7 @@ def generate_content(model, prompt_parts):
         st.error(f"API 호출 실패: {str(e)}")
         return None
 
-st.title("교외 현장체험학습 계획서 도우미")
+st.title("교외체험학습 계획서 도우미")
 
 # 여행 날짜 선택
 month = st.slider("여행 월을 선택하세요", min_value=1, max_value=12, value=st.session_state['month'], key='month_slider')
