@@ -44,7 +44,7 @@ with col1:
 with col2:
     st.markdown(
         """
-        <h4>4. 어머니 전교회장이 되고 싶습니다</h4>
+        <h4>4. 어머니 전교회장이 되고 싶습니다 </h4>
         <a href="https://for-parents.streamlit.app/%EC%96%B4%EB%A8%B8%EB%8B%88_%EC%A0%84%EA%B5%90%ED%9A%8C%EC%9E%A5%EC%9D%B4_%EB%90%98%EA%B3%A0_%EC%8B%B6%EC%8A%B5%EB%8B%88%EB%8B%A4" target="_blank" style="text-decoration: none;">
             <span style="font-size: 100px;">🎓</span>
             <div style="text-align: center; font-size: 20px;">클릭하세요</div>
