@@ -16,6 +16,7 @@ hide_github_icon = """
     #MainMenu{ visibility: hidden; }
     footer { visibility: hidden; }
     header { visibility: hidden; }
+    .css-1rs6os.edgvbvh3 { visibility: visible !important; }  /* Running 상태 보이기 */
     </style>
 """
 
