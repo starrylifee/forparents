@@ -35,10 +35,6 @@ if 'destination' not in st.session_state:
 if 'activities' not in st.session_state:
     st.session_state['activities'] = ["", ""]
 
-# 사용자 입력을 세션 상태에 저장하는 함수
-def save_student_input():
-    st.session_state['student_input'] = st.session_state['student_input_text']
-
 # secrets.toml 파일 경로 및 읽기
 secrets_path = pathlib.Path(__file__).parent.parent / ".streamlit/secrets.toml"
 with open(secrets_path, "r") as f:
