@@ -90,7 +90,7 @@ if st.button("계획서 생성", key="generate"):
         selected_api_key = random.choice(api_keys)
         
         # 사용자 입력 프롬프트 생성
-        user_input_prompt = f"{destination}에 {'와'.join(companions)} 함께 갈거야.\n주요 활동: {activity1}, {activity2}"
+        user_input_prompt = f"{destination}에 {'와'.join(companions)} 함께 갈 예정입니다. 주요 활동은 다음과 같습니다: {activity1}, {activity2}"
         
         # 전체 프롬프트
         prompt = [
