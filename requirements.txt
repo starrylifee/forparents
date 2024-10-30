@@ -2,3 +2,4 @@ streamlit
 google-generativeai
 pillow
 toml
+openai
