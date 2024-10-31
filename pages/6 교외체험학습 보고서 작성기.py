@@ -109,7 +109,7 @@ def share_google_doc(document_id, user_email):
     print(f"[DEBUG] Google Doc shared with {user_email}")
 
 # 단계 1: 응답 생성
-if st.button("채헌학습 보고서 생성") and end_date >= start_date:
+if st.button("채험학습 보고서 생성") and end_date >= start_date:
     print("[DEBUG] Generate Response button clicked")
     if end_date < start_date:
         st.warning("종료일은 시작일 이후여야 합니다. 보고서를 생성할 수 없습니다.")
@@ -118,7 +118,7 @@ if st.button("채헌학습 보고서 생성") and end_date >= start_date:
     if user_input:
         # OpenAI로부터 응답 생성
         ai_response = generate_response(user_input)
-        st.text_area("AI가 생성한 보고서. 내용을 상인만 수정하세요.", ai_response, height=300)
+        st.text_area("AI가 생성한 보고서. 내용을 살펴보고 수정하세요.", ai_response, height=300)
         st.session_state['ai_response'] = ai_response
     else:
         st.warning("내용을 입력하세요.")
