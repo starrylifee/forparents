@@ -6,6 +6,19 @@ from googleapiclient.discovery import build
 from openai import OpenAI
 import datetime
 
+hide_github_icon = """
+    <style>
+    .css-1jc7ptx, .e1ewe7hr3, .viewerBadge_container__1QSob,
+    .styles_viewerBadge__1yB5_, .viewerBadge_link__1S137,
+    .viewerBadge_text__1JaDK{ display: none; }
+    #MainMenu{ visibility: hidden; }
+    footer { visibility: hidden; }
+    header { visibility: hidden; }
+    </style>
+"""
+
+st.markdown(hide_github_icon, unsafe_allow_html=True)
+
 # secrets.toml 파일 경로 및 읽기
 secrets_path = pathlib.Path(__file__).parent.parent / ".streamlit/secrets.toml"
 print(f"[DEBUG] secrets_path: {secrets_path}")
@@ -28,7 +41,6 @@ end_date = st.date_input("학습 종료일을 선택하세요:")
 if end_date < start_date:
     st.error("종료일은 시작일 이후여야 합니다. 다시 선택해주세요.")  # (new)
 duration = (end_date - start_date).days + 1 if start_date != end_date else 1  # (new)
-duration = (end_date - start_date).days
 user_date = f"{start_date.strftime('%Y년%m월%d일')} ~ {end_date.strftime('%Y년%m월%d일')} ({duration}일간)"
 
 user_school = st.text_input("학교 이름을 입력하세요. 예: 서울한국초등학교")
