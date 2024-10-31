@@ -17,7 +17,7 @@ print(f"[DEBUG] secrets loaded: {secrets}")
 st.title("체험학습 보고서 자동 생성 도구")
 
 # 추가 입력 필드
-user_grade = st.text_input("학년을 입력하세요. 예: 1")
+user_grade = st.selectbox("학년을 선택하세요:", ["1학년", "2학년", "3학년", "4학년", "5학년", "6학년"])  # (new)
 user_class = st.text_input("반을 입력하세요. 예: 5 ")
 user_number = st.text_input("번호를 입력하세요. 예: 13")
 user_gender = st.selectbox("성별을 선택하세요:", ("남자", "여자"))
@@ -25,6 +25,9 @@ user_gender = st.selectbox("성별을 선택하세요:", ("남자", "여자"))
 # 학습 일시 입력 필드를 구조화하여 입력 오류를 방지
 start_date = st.date_input("학습 시작일을 선택하세요:")
 end_date = st.date_input("학습 종료일을 선택하세요:")
+if end_date < start_date:
+    st.error("종료일은 시작일 이후여야 합니다. 다시 선택해주세요.")  # (new)
+duration = (end_date - start_date).days + 1 if start_date != end_date else 1  # (new)
 duration = (end_date - start_date).days
 user_date = f"{start_date.strftime('%Y년%m월%d일')} ~ {end_date.strftime('%Y년%m월%d일')} ({duration}일간)"
 
