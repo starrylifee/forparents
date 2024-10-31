@@ -30,26 +30,26 @@ print(f"[DEBUG] secrets loaded: {secrets}")
 st.title("체험학습 보고서 자동 생성 도구")
 
 # 추가 입력 필드
-user_grade = st.selectbox("학년을 선택하세요:", ["1학년", "2학년", "3학년", "4학년", "5학년", "6학년"])  # (new)
-user_class = st.text_input("반을 입력하세요. 예: 5 ")
-user_number = st.text_input("번호를 입력하세요. 예: 13")
-user_gender = st.selectbox("성별을 선택하세요:", ("남자", "여자"))
+user_grade = st.selectbox("학년을 선택하세요. (선택)", ["1학년", "2학년", "3학년", "4학년", "5학년", "6학년"])  # (new)
+user_class = st.text_input("반을 입력하세요. 예시: 5. (선택)")
+user_number = st.text_input("번호를 입력하세요. 예시: 13. (선택)")
+user_gender = st.selectbox("성별을 선택하세요. (선택)", ("남자", "여자"))
 
 # 학습 일시 입력 필드를 구조화하여 입력 오류를 방지
-start_date = st.date_input("학습 시작일을 선택하세요:")
-end_date = st.date_input("학습 종료일을 선택하세요:")
+start_date = st.date_input("학습 시작일을 선택하세요. (필수)")
+end_date = st.date_input("학습 종료일을 선택하세요. (필수)")
 if end_date < start_date:
     st.error("종료일은 시작일 이후여야 합니다. 다시 선택해주세요.")  # (new)
 duration = (end_date - start_date).days + 1 if start_date != end_date else 1  # (new)
 user_date = f"{start_date.strftime('%Y년%m월%d일')} ~ {end_date.strftime('%Y년%m월%d일')} ({duration}일간)"
 
-user_school = st.text_input("학교 이름을 입력하세요. 예: 서울한국초등학교")
+user_school = st.text_input("학교 이름을 입력하세요. 예시: 서울한국초등학교 (선택)")
 
-user_input = st.text_area("학생이 체험한 내용을 입력하세요:")
+user_input = st.text_area("학생이 체험한 내용을 입력하세요. (필수)")
 print(f"[DEBUG] user_input: {user_input}")
 
 # 사용자에게 문서 공유 이메일을 먼저 입력받음
-user_email = st.text_input("체험학습 보고서를 받을 이메일을 입력하세요:")
+user_email = st.text_input("체험학습 보고서를 받을 이메일을 입력하세요. (필수)")
 print(f"[DEBUG] User email input: {user_email}")
 
 # OpenAI API 키 설정
