@@ -25,7 +25,7 @@ with open(secrets_path, "r") as f:
     secrets = toml.load(f)
 
 # Streamlit UI 설정
-st.title("체험학습 계획서 보고서 한번에! ✨")
+st.title("체험학습 서류를 한번에! ✨")
 
 # 필수 입력 필드
 st.header("필수 입력 항목")
