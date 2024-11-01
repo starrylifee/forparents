@@ -29,23 +29,23 @@ st.title("체험학습 보고서 자동 생성 도구")
 
 # 필수 입력 필드
 st.header("필수 입력 항목")
-start_date = st.date_input("학습 시작일을 선택하세요. (필수)")
-end_date = st.date_input("학습 종료일을 선택하세요. (필수)")
+start_date = st.date_input("학습 시작일을 선택하세요.")
+end_date = st.date_input("학습 종료일을 선택하세요.")
 if end_date < start_date:
     st.error("종료일은 시작일 이후여야 합니다. 다시 선택해주세요.")  # (new)
 duration = (end_date - start_date).days + 1 if start_date != end_date else 1  # (new)
 user_date = f"{start_date.strftime('%Y년%m월%d일')} ~ {end_date.strftime('%Y년%m월%d일')} ({duration}일간)"
 
-user_input = st.text_area("학생이 체험한 내용을 입력하세요. (필수)")
-user_email = st.text_input("체험학습 보고서를 받을 이메일을 입력하세요. (필수)")
+user_input = st.text_area("학생이 체험한 내용을 입력하세요.")
+user_email = st.text_input("체험학습 보고서를 받을 이메일을 입력하세요.")
 
 # 선택 입력 필드
 st.header("선택 입력 항목")
-user_grade = st.selectbox("학년을 선택하세요. (선택)", ["1학년", "2학년", "3학년", "4학년", "5학년", "6학년"])  # (new)
-user_class = st.text_input("반을 입력하세요. 예시: 5. (선택)")
-user_number = st.text_input("번호를 입력하세요. 예시: 13. (선택)")
-user_gender = st.selectbox("성별을 선택하세요. (선택)", ("남자", "여자"))
-user_school = st.text_input("학교 이름을 입력하세요. 예시: 서울한국초등학교 (선택)")
+user_grade = st.selectbox("학년을 선택하세요.", ["1학년", "2학년", "3학년", "4학년", "5학년", "6학년"])  # (new)
+user_class = st.text_input("반을 입력하세요. 예시: 5.")
+user_number = st.text_input("번호를 입력하세요. 예시: 13.")
+user_name = st.text_input("이름을 입력하세요.")
+user_school = st.text_input("학교 이름을 입력하세요. 예시: 서울한국초등학교")
 
 # OpenAI API 키 설정
 client = OpenAI(api_key=secrets['openai']['api_key'])
@@ -137,7 +137,7 @@ if st.session_state.get('show_email_button') and st.button("채험학습 보고�
                 "{{user_grade}}": user_grade,
                 "{{user_class}}": user_class,
                 "{{user_number}}": user_number,
-                "{{user_gender}}": user_gender,
+                "{{user_name}}": user_name,
                 "{{user_date}}": user_date,
                 "{{user_school}}": user_school,
                 "{{ai_response}}": st.session_state['ai_response']
