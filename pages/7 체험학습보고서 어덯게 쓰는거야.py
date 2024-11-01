@@ -37,6 +37,7 @@ duration = (end_date - start_date).days + 1 if start_date != end_date else 1  # 
 user_date = f"{start_date.strftime('%Y년%m월%d일')} ~ {end_date.strftime('%Y년%m월%d일')} ({duration}일간)"
 
 user_input = st.text_area("학생이 체험한 내용을 입력하세요. (필수)")
+user_email = st.text_input("체험학습 보고서를 받을 이메일을 입력하세요. (필수)")
 
 # 선택 입력 필드
 st.header("선택 입력 항목")
@@ -106,46 +107,47 @@ def share_google_doc(document_id, user_email):
 
 # 단계 1: 응답 생성
 if st.button("채험학습 보고서 생성") and end_date >= start_date:
-    if end_date < start_date:
-        st.warning("종료일은 시작일 이후여야 합니다. 보고서를 생성할 수 없습니다.")
-        st.stop()  # (new)
-    if user_input:
-        # OpenAI로부터 응답 생성
-        ai_response = generate_response(user_input)
-        st.text_area("AI가 생성한 보고서. 내용을 살펴보고 수정하세요.", ai_response, height=300)
-        st.session_state['ai_response'] = ai_response
-        st.session_state['show_email_button'] = True
-    else:
-        st.warning("내용을 입력하세요.")
+    with st.spinner('보고서를 생성하는 중입니다...'):
+        if end_date < start_date:
+            st.warning("종료일은 시작일 이후여야 합니다. 보고서를 생성할 수 없습니다.")
+            st.stop()  # (new)
+        if user_input and user_email:
+            # OpenAI로부터 응답 생성
+            ai_response = generate_response(user_input)
+            st.text_area("AI가 생성한 보고서. 내용을 살펴보고 수정하세요.", ai_response, height=300)
+            st.session_state['ai_response'] = ai_response
+            st.session_state['show_email_button'] = True
+        else:
+            st.warning("모든 필수 항목을 입력하세요.")
 
 # 단계 2: Google 문서로 저장
-if st.session_state.get('show_email_button') and st.button("체험학습 보고서를 E-mail로 받아보기"):
-    user_email = st.text_input("체험학습 보고서를 받을 이메일을 입력하세요. (필수)")
-    if 'ai_response' in st.session_state and user_email:
-        # 고유한 문서 제목 생성
-        timestamp = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-        doc_title = f"체험학습 보고서 - {timestamp}"
+if st.session_state.get('show_email_button') and st.button("채험학습 보고서를 E-mail로 받아보기"):
+    with st.spinner('보고서를 이메일로 보내는 중입니다...'):
+        if 'ai_response' in st.session_state and user_email:
+            # 고유한 문서 제목 생성
+            timestamp = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+            doc_title = f"체험학습 보고서 - {timestamp}"
 
-        # Google 템플릿 문서를 복사하고 새 문서 ID 검색
-        template_document_id = "1YXgIIb64mPDXn0PmVgIi36xM52MMVWVEOXNoWBY53PM"  # 미리 생성된 템플릿 문서 ID를 사용
-        document_id = copy_template_document(template_document_id, doc_title)
+            # Google 템플릿 문서를 복사하고 새 문서 ID 검색
+            template_document_id = "1YXgIIb64mPDXn0PmVgIi36xM52MMVWVEOXNoWBY53PM"  # 미리 생성된 템플릿 문서 ID를 사용
+            document_id = copy_template_document(template_document_id, doc_title)
 
-        # 템플릿의 플레이스홀더들을 AI 응답과 사용자 입력으로 대체
-        placeholders_contents = {
-            "{{user_grade}}": user_grade,
-            "{{user_class}}": user_class,
-            "{{user_number}}": user_number,
-            "{{user_gender}}": user_gender,
-            "{{user_date}}": user_date,
-            "{{user_school}}": user_school,
-            "{{ai_response}}": st.session_state['ai_response']
-        }
-        fill_template_google_doc(document_id, placeholders_contents)
+            # 템플릿의 플레이스홀더들을 AI 응답과 사용자 입력으로 대체
+            placeholders_contents = {
+                "{{user_grade}}": user_grade,
+                "{{user_class}}": user_class,
+                "{{user_number}}": user_number,
+                "{{user_gender}}": user_gender,
+                "{{user_date}}": user_date,
+                "{{user_school}}": user_school,
+                "{{ai_response}}": st.session_state['ai_response']
+            }
+            fill_template_google_doc(document_id, placeholders_contents)
 
-        # 사용자에게 문서 공유
-        share_google_doc(document_id, user_email)
-        st.success(f"문서가 성공적으로 생성되고 공유되었습니다! 문서 ID: {document_id}")
-    elif not user_email:
-        st.warning("이메일을 입력하세요.")
-    elif 'ai_response' not in st.session_state:
-        st.warning("먼저 보고서를 생성하세요.")
+            # 사용자에게 문서 공유
+            share_google_doc(document_id, user_email)
+            st.success(f"문서가 성공적으로 생성되고 공유되었습니다! 문서 ID: {document_id}")
+        elif not user_email:
+            st.warning("이메일을 입력하세요.")
+        elif 'ai_response' not in st.session_state:
+            st.warning("먼저 보고서를 생성하세요.")

@@ -63,7 +63,7 @@ drive_service = build('drive', 'v3', credentials=credentials)
 
 # OpenAI로부터 응답을 생성하는 함수
 def generate_response_for_plan(user_grade, location, purpose, user_date):
-    prompt = f"학년: {user_grade}, 장소: {location}, 목적: {purpose}, 기간: {user_date}. 이를 바탕으로 체험학습 계획서를 10줄 이하로 작성해주세요. 계획서는 마크다운을 사용하지 않고 텍스트로 출력해주세요."
+    prompt = f"학년: {user_grade}, 장소: {location}, 목적: {purpose}, 기간: {user_date}. 이를 바탕으로 체험학습 계획서를 10줄 이하로 작성해주세요. 계획서는 마크다운을 사용하지 않고 줄글 형태의 텍스트로 출력해주세요."
     response = client.chat.completions.create(
         model="gpt-4o-mini",
         messages=[
